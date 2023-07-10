@@ -1,0 +1,16 @@
+.container {
+  width: 100%;
+  max-width: 1024px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: center;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
