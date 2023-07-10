@@ -14,3 +14,32 @@
   display: flex;
   flex-direction: column;
 }
+
+.post-author-wrapper {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.title-center {
+  text-align: center;
+}
+
+.post-section {
+  margin-right: 20px;
+}
+
+.comment {
+  border: 1px solid gray;
+  padding: 0 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.post {
+  display: block;
+  border: 1px solid gray;
+  padding: 0 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { IPost } from '../../models/IPost';
 import { useNavigate, useParams } from 'react-router-dom';
 import { IUser } from '../../models/IUser';
-import { fetchComments } from '../../store/reducers/ActionCreators';
+import { createComment, fetchComments } from '../../store/reducers/ActionCreators';
 import { IComment } from '../../models/IComment';
 import { Button } from '@mui/material';
 import CommentModal from '../CommentModal/CommentModal';
@@ -21,13 +21,22 @@ function PostPage() {
   const post = posts.find((el: IPost) => el.id.toString() === postId);
   const user = users.find((el: IUser) => el.id === post?.userId);
   const [open, setOpen] = useState(false);
+  const [values, setValues] = useState({ title: '', body: '' });
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  
   const handleClose = () => {
     setOpen(false);
+    setValues({ title: '', body: '' });
+  };
+
+  const handleSubmit = () => {
+    if (postId) {
+      dispatch(createComment({ ...values, postId }));
+    }
+    handleClose();
   };
 
   useEffect(() => {
@@ -41,27 +50,25 @@ function PostPage() {
       <div className="page-header">
         <Button variant="contained" onClick={() => navigate(-1)}>Back</Button>
       </div>
-      <div>
+      <div className='post-author-wrapper'>
         <div className='post-section'>
           {
             post ? (
-              <div>
-                <h2>{post.title}</h2>
-                <p>{post.body}</p>
-                <Button variant="contained" onClick={handleClickOpen}>
-                  Post a comment
+              <>
+                <h2>{post.title}</h2><p>{post.body}</p><Button className="comment-btn" variant="contained" onClick={handleClickOpen}>
+                Post a comment
                 </Button>
-              </div>
+              </>
             ) : (
               <p>Post not found</p>
             )
           }
         </div>
         <div className='author-section'>
+          <h2>Author:</h2>
           {
             user ? (
               <div className='author-info'>
-                <h2>Author:</h2>
                 <span>Name: {user.name}</span>
                 <span>Username: {user.username}</span>
                 <span>Email: {user.email}</span>
@@ -74,14 +81,13 @@ function PostPage() {
           }
         </div>
       </div>
-      <div>
-        <h2>Comments:</h2>
-        
+      <div className='comments-section'>
+        <h2 className='title-center'>Comments:</h2>
         <div>
           {isCommentsLoading && <p>Loading...</p>}
           {errorComments && <p>{errorComments}</p>}
           {comments.length ? comments.map((el: IComment) => (
-            <div key={el.id}>
+            <div className="comment" key={el.id}>
               <h4>{el.name}</h4>
               <p>{el.body}</p>
             </div>
@@ -91,7 +97,7 @@ function PostPage() {
 
         </div>
       </div>
-      <CommentModal open={open} handleClose={handleClose} postId={postId} />
+      <CommentModal open={open} handleClose={handleClose} values={values} setValues={setValues} handleSubmit={handleSubmit}/>
     </div>
   );
 }

@@ -1,7 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IPost } from '../../models/IPost';
 import { IUser } from '../../models/IUser';
 import { IComment } from '../../models/IComment';
+import { enqueueSnackbar } from 'notistack';
 
 export const fetchPosts = createAsyncThunk(
   'posts/fetchAll',
@@ -21,12 +23,13 @@ export const fetchPosts = createAsyncThunk(
 
 export const fetchUserPosts = createAsyncThunk(
   'posts/fetchUserPosts',
-  async (userId: string, thunkAPI) => {
+  async (user: IUser, thunkAPI) => {
     try {
-      const response = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`);
+      const response = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${user.id}`);
       if (!response.ok) {
         throw new Error;
       }
+      enqueueSnackbar(`Showing posts by ${user.name}`);
       const result = (await response.json()) as IPost[];
       return result;
     } catch (error) {
@@ -86,6 +89,7 @@ export const createComment = createAsyncThunk(
       if (!response.ok) {
         throw new Error;
       }
+      enqueueSnackbar('Comment successfully submitted');
       const result = (await response.json()) as IComment;
       return result;
     } catch (error) {

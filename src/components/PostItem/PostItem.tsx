@@ -8,12 +8,12 @@ interface PostItemProps {
 
 function PostItem({ post }: PostItemProps) {
   return (
-    <div>
-      <NavLink to={`/posts/${post.id}`}>
-        <h3>{post.title}</h3>
-        <p>{post.body}</p>
-      </NavLink>
-    </div>
+  // <div>
+    <NavLink className='post' to={`/posts/${post.id}`}>
+      <h3>{post.title}</h3>
+      <p>{post.body}</p>
+    </NavLink>
+  // </div>
   );
 }
 
