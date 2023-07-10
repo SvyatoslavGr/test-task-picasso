@@ -1,14 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useState } from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-// import { useAppDispatch } from '../../hooks/redux';
-// import { createComment } from '../../store/reducers/ActionCreators';
 
 interface CommentModalProps {
   open: boolean;
@@ -19,7 +16,6 @@ interface CommentModalProps {
 }
 
 export default function CommentModal({ open, handleClose, values, setValues, handleSubmit }: CommentModalProps) {
-  
   
   return (
     <div>
